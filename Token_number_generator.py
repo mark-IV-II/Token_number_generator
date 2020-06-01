@@ -8,18 +8,20 @@ def playaudio():
     playsound('.\\notify\\notify.mp3')
 
 def next_num(event=None):
-    global num
-    num+=1
-    number_label.configure(text=str(num))
+    number=num.get()
+    number+=1
+    num.set(number)
+    root.update()
     playaudio()
 
 def prev_num(event=None):
-    global num
-    if num > 1:
-        num-=1
-    number_label.configure(text=str(num))
+    number=num.get()
+    if number > 1:
+        number-=1
+    num.set(number)
+    root.update()
     playaudio()
-num = 1
+
 
 root=Tk()
 
@@ -30,7 +32,10 @@ root.bind('<Shift-Return>',prev_num)
 app_canvas= Canvas(root, width = 1024, height = 768)
 app_canvas.pack()
 
-number_label = ttk.Label(root, text = str(num))
+num = tkinter.IntVar()
+num.set(1)
+
+number_label = ttk.Label(root, textvariable = num)
 number_label.config(font=('Verdana 400 bold'))
 
 next_button=ttk.Button(root, text = 'Next', width = 20, command=next_num)
